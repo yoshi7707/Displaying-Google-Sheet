@@ -51,9 +51,9 @@
 //   }
 // }
 
-import dbConnect from '@/lib/mongodb';
-import Sheet from '@/models/Sheet';
-import { getSheetData, updateSheetData } from '@/lib/googleSheets';
+import dbConnect from '../../../lib/mongodb.js';
+import Sheet from '../../../models/Sheet.js';
+import { getSheetData, updateSheetData } from '../../../lib/googleSheets.js';
 
 // GET handler
 export async function GET(request, { params }) {
