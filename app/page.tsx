@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="container">
       <br />
-      <h1>御生誕祭お誘い5万ベース必達表</h1>
+      <h1>御生誕祭お誘い5万ベース必達リスト</h1>
       <SheetEditor sheetId={sheetId} />
     </div>
   );
