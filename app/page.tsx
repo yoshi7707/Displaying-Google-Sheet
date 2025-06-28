@@ -12,7 +12,6 @@ export default function Home() {
     <div className="container">
       <br />
       <h1>御生誕祭お誘い5万ベース必達表</h1>
-      <br />
       <SheetEditor sheetId={sheetId} />
     </div>
   );
