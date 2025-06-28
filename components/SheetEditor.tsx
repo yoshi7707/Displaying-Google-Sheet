@@ -75,23 +75,48 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
         disabled={saving}
         className="save-btn"
       >
-        {saving ? 'Saving...' : 'Save to Google Sheets & MongoDB'}
+        {saving ? 'Saving...' : '入力が終わったらここをクリック'}
       </button>
       
       <table className="sheet-table">
         <tbody>
           {data.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {row.map((cell, colIndex) => (
-                <td key={colIndex}>
-                  <input
-                    type="text"
-                    value={cell}
-                    onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
-                    className="cell-input"
-                  />
-                </td>
-              ))}
+              {row.map((cell, colIndex) => {
+                // Columns 2, 5, 8, 11, 14, 17 should be wider (0-indexed: 1, 4, 7, 10, 13, 16)
+                const wideColumns = [1, 4, 7, 10, 13, 16];
+                const widerColumns = [2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18];
+                const isWide = wideColumns.includes(colIndex);
+                const isWider = widerColumns.includes(colIndex);
+
+                let width = '30px';
+                if (isWide) {
+                  width = '3000px';
+                } else if (isWider) {
+                  width = '1000px';
+                }
+
+                const style: React.CSSProperties = { width };
+                if (rowIndex >= 2 && rowIndex <= 2) {
+                  style.fontSize = '14px';
+                } else {
+                  style.fontSize = '16px';
+                }
+
+                return (
+                  <td
+                    key={colIndex}
+                    style={style}
+                  >
+                    <input
+                      type="text"
+                      value={cell}
+                      onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
+                      className="cell-input"
+                    />
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>

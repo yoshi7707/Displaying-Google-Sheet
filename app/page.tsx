@@ -10,7 +10,9 @@ export default function Home() {
 
   return (
     <div className="container">
-      <h1>Google Sheets Editor</h1>
+      <br />
+      <h1>御生誕祭お誘い5万ベース必達表</h1>
+      <br />
       <SheetEditor sheetId={sheetId} />
     </div>
   );
