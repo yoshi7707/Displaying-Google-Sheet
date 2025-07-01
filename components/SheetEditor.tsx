@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import styles from './SheetEditor.module.css';
 
 interface SheetEditorProps {
   sheetId: string | undefined;
@@ -69,50 +70,39 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
   if (!sheetId) return <div>Google Sheet ID is not configured.</div>
 
   return (
-    <div className="sheet-editor">
+    <div className={styles['sheet-editor']}>
       <button 
         onClick={saveData} 
         disabled={saving}
-        className="save-btn"
+        className={styles['save-btn']}
       >
         {saving ? 'Saving...' : '入力が終わったらここをクリック'}
       </button>
       
-      <table className="sheet-table">
+      <table className={styles['sheet-table']}>
         <tbody>
           {data.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, colIndex) => {
-                // Columns 2, 5, 8, 11, 14, 17 should be wider (0-indexed: 1, 4, 7, 10, 13, 16)
                 const wideColumns = [1, 4, 7, 10, 13, 16];
                 const widerColumns = [2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18];
                 const isWide = wideColumns.includes(colIndex);
                 const isWider = widerColumns.includes(colIndex);
 
-                let width = '30px';
+                let cellClassName = '';
                 if (isWide) {
-                  width = '3000px';
+                  cellClassName = styles['wide-column'];
                 } else if (isWider) {
-                  width = '1000px';
-                }
-
-                const style: React.CSSProperties = { width };
-                if (rowIndex >= 2 && rowIndex <= 2) {
-                  style.fontSize = '14px';
-                } else {
-                  style.fontSize = '16px';
+                  cellClassName = styles['wider-column'];
                 }
 
                 return (
-                  <td
-                    key={colIndex}
-                    style={style}
-                  >
+                  <td key={colIndex} className={cellClassName}>
                     <input
                       type="text"
                       value={cell}
                       onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
-                      className="cell-input"
+                      className={styles['cell-input']}
                     />
                   </td>
                 );
