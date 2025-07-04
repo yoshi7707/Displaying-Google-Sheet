@@ -13,21 +13,40 @@
   border: 1px solid #ccc;
   padding: 8px;
   box-sizing: border-box; /* Ensures padding doesn't add to the width */
-  font-size: 14px;
+  font-size: 20px;
 }
 
 /* Default column widths */
 .sheet-table td {
-  min-width: 120px; /* A sensible default for all columns */
+  min-width: 60px; /* A sensible default for all columns */
 }
 
 /* Special widths for specific columns */
 .sheet-table .wide-column {
-  min-width: 250px;
+  min-width: 125px;
 }
 
 .sheet-table .wider-column {
-  min-width: 180px;
+  min-width: 90px;
+}
+
+.sheet-table .narrow-column {
+  width: 20px;
+}
+
+.save-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.save-btn:hover {
+  background-color: #0056b3;
 }
 
 /* Responsive styles for mobile devices */
@@ -46,15 +65,19 @@
 
   .sheet-table td {
     display: inline-block; /* Lays out cells side-by-side */
-    min-width: 150px; /* A larger minimum width for better touch interaction */
+    min-width: 75px; /* A larger minimum width for better touch interaction */
   }
 
   .sheet-table .wide-column {
-    min-width: 300px;
+    min-width: 150px;
   }
 
   .sheet-table .wider-column {
-    min-width: 200px;
+    min-width: 100px;
+  }
+
+  .sheet-table .narrow-column {
+    width: 25px;
   }
 
   .save-btn {

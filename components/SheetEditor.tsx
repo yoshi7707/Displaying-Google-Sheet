@@ -76,7 +76,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
         disabled={saving}
         className={styles['save-btn']}
       >
-        {saving ? 'Saving...' : '入力が終わったらここをクリック'}
+        {saving ? 'Saving...' : '入力が終わったらここを押してしてください'}
       </button>
       
       <table className={styles['sheet-table']}>
@@ -84,17 +84,19 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
           {data.map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, colIndex) => {
+                // Column indices are 0-based
+                const narrowColumns = [0, 2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18];
                 const wideColumns = [1, 4, 7, 10, 13, 16];
-                const widerColumns = [2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18];
+
+                const isNarrow = narrowColumns.includes(colIndex);
                 const isWide = wideColumns.includes(colIndex);
-                const isWider = widerColumns.includes(colIndex);
 
                 let cellClassName = '';
-                if (isWide) {
+                if (isNarrow) {
+                  cellClassName = styles['narrow-column'];
+                } else if (isWide) {
                   cellClassName = styles['wide-column'];
-                } else if (isWider) {
-                  cellClassName = styles['wider-column'];
-                }
+                } 
 
                 return (
                   <td key={colIndex} className={cellClassName}>
@@ -103,6 +105,7 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                       value={cell}
                       onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
                       className={styles['cell-input']}
+                      maxLength={isNarrow ? 2 : undefined}
                     />
                   </td>
                 );
@@ -113,4 +116,5 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
       </table>
     </div>
   );
-} 
+}
+ 
