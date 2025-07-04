@@ -50,12 +50,14 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
   const saveData = async () => {
     setSaving(true);
     try {
+      // We only want to save the data from the 7th row onwards
+      const dataToSave = data.slice(6);
       await fetch(`/api/sheets/${sheetId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ data }),
+        body: JSON.stringify({ data: dataToSave }),
       });
       alert('Data saved successfully!');
     } catch (error) {
@@ -81,9 +83,10 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
       
       <table className={styles['sheet-table']}>
         <tbody>
-          {data.map((row, rowIndex) => (
+          {data.slice(2).map((row, rowIndex) => (
             <tr key={rowIndex}>
               {row.map((cell, colIndex) => {
+                const isReadOnly = rowIndex < 4; // Now that we slice, the first 4 rows are the old 3-6
                 // Column indices are 0-based
                 const narrowColumns = [0, 2, 3, 5, 6, 8, 9, 11, 12, 14, 15, 17, 18];
                 const wideColumns = [1, 4, 7, 10, 13, 16];
@@ -103,9 +106,10 @@ export default function SheetEditor({ sheetId }: SheetEditorProps) {
                     <input
                       type="text"
                       value={cell}
-                      onChange={(e) => updateCell(rowIndex, colIndex, e.target.value)}
-                      className={styles['cell-input']}
+                      onChange={(e) => updateCell(rowIndex + 2, colIndex, e.target.value)} // Add 2 to the index to match the original data
+                      className={`${styles['cell-input']} ${isReadOnly ? styles['read-only'] : ''}`}
                       maxLength={isNarrow ? 2 : undefined}
+                      readOnly={isReadOnly}
                     />
                   </td>
                 );
