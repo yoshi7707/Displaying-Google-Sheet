@@ -16,6 +16,12 @@
   font-size: 20px;
 }
 
+.read-only {
+  background-color: #f0f0f0;
+  color: #555;
+  cursor: not-allowed;
+}
+
 /* Default column widths */
 .sheet-table td {
   min-width: 60px; /* A sensible default for all columns */
